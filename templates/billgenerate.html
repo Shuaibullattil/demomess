@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            max-width: 400px; /* Set the form width */
+            margin: 50px auto; /* Center the form vertically and horizontally */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Monthly Bill</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Month</th>
+                        <th>Effective Days</th>
+                        <th>Cost Per Day</th>
+                        <th>Establishment Fee</th>
+                        <th>Total Fee</th>
+                        <th>Apply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users%}
+                    <tr>
+                        <td>{{user.month}}</td>
+                        <td>{{user.effectiveDays}}</td>
+                        <td>{{user.costPerDay}}</td>
+                        <td>{{user.estFee}}</td>
+                        <td>{{user.totalFee}}</td>
+                        <td><a href="{% url "applyBill" user.month %}" class="btn btn-success">Effect all</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+<div class="container">
+    <div class="form-container">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center">
+                <h5 class="mb-0">Bill Generation</h5>
+            </div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <!-- Month Selection -->
+                    <div class="form-group">
+                        <label for="month">Select Month</label>
+                        <select class="form-control" id="month" name="month" required>
+                            <option value="" disabled selected>Choose a month</option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                    </div>
+
+                    <!-- Effective Days Input -->
+                    <div class="form-group">
+                        <label for="effectiveDays">Number of Effective Days</label>
+                        <input type="number" class="form-control" id="effectiveDays" name="effectiveDays" placeholder="Enter number of effective days" min="1" required>
+                    </div>
+
+                    <!-- Establishment Fee Input -->
+                    <div class="form-group">
+                        <label for="establishmentFee">Establishment Fee</label>
+                        <input type="number" class="form-control" id="establishmentFee" name="establishmentFee" placeholder="Enter establishment fee" min="0" required>
+                    </div>
+
+                    <!-- Cost Per Day Input -->
+                    <div class="form-group">
+                        <label for="costPerDay">Cost of Food Per Day</label>
+                        <input type="number" class="form-control" id="costPerDay" name="costPerDay" placeholder="Enter cost of food per day" min="0" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block">Generate Bill</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
